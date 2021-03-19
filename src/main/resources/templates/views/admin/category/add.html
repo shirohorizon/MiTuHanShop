@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main class="main--container" layout:fragment="content">
+    <!-- Page Header Start -->
+    <section class="page--header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Page Title Start -->
+                    <h2 class="page--title h5">Form Wizard</h2>
+                    <!-- Page Title End -->
+
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item"><span>Form</span></li>
+                        <li class="breadcrumb-item active"><span>Form Wizard</span></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-6">
+                    <!-- Summary Widget Start -->
+                    <div class="summary--widget">
+                        <div class="summary--item">
+                            <p class="summary--chart" data-trigger="sparkline" data-type="bar" data-width="5" data-height="38" data-color="#009378">2,9,7,9,11,9,7,5,7,7,9,11</p>
+
+                            <p class="summary--title">This Month</p>
+                            <p class="summary--stats text-green">2,371,527</p>
+                        </div>
+
+                        <div class="summary--item">
+                            <p class="summary--chart" data-trigger="sparkline" data-type="bar" data-width="5" data-height="38" data-color="#e16123">2,3,7,7,9,11,9,7,9,11,9,7</p>
+
+                            <p class="summary--title">Last Month</p>
+                            <p class="summary--stats text-orange">2,527,371</p>
+                        </div>
+                    </div>
+                    <!-- Summary Widget End -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Header End -->
+
+    <!-- Main Content Start -->
+    <section class="main--content">
+    <div class="col-md-12">
+        <!-- Panel Start -->
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add Category</h3>
+            </div>
+            <div th:if="${message != null}"
+                 class="alert alert-success" th:text="${message}"></div>
+
+            <div th:if="${error != null}"
+                 class="alert alert-danger" th:text="${error}"></div>
+            <form role="form" th:object="${gModel}"
+                  method="post"
+                  enctype="multipart/form-data"
+                  th:action="@{/admin/category/doadd}">
+            <div class="panel-content pt-5">
+                <div class="form-inline">
+                    <label class="mr-3  mb-3">
+                        <span class="label-text">Name: </span>
+                        <input type="text" th:field="*{name}" class="form-control">
+                    </label>
+
+                    <label class="mr-3  mb-3">
+                        <span class="label-text">Full Name: </span>
+                        <select class="form-control" th:field="*{parent_id}">
+                            <option value="0">No parent</option>
+                            <option th:each="parent : ${parents}"
+                                    th:value="${parent.getId()}"
+                                    th:text="${parent.getName()}">
+
+                            </option>
+                        </select>
+                    </label>
+
+                    <input type="submit" value="Submit" class="btn btn-sm btn-rounded btn-success mr-2  mb-3">
+                    <button type="button" class="btn btn-sm btn-rounded btn-outline-secondary mb-3">Cancel</button>
+                </div>
+            </div>
+            </form>
+        </div>
+
+        <!-- Panel End -->
+        <!-- Main Content End --></div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main class="main--container" layout:fragment="content">
+    <!-- Page Header Start -->
+    <section class="page--header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Page Title Start -->
+                    <h2 class="page--title h5">account</h2>
+                    <!-- Page Title End -->
+
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="ecommerce.html">Ecommerce</a></li>
+                        <li class="breadcrumb-item active"><span>Products</span></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-6">
+                    <!-- Summary Widget Start -->
+                    <div class="summary--widget">
+                        <div class="summary--item">
+                            <p class="summary--chart" data-trigger="sparkline" data-type="bar" data-width="5" data-height="38" data-color="#009378">2,9,7,9,11,9,7,5,7,7,9,11</p>
+
+                            <p class="summary--title">This Month</p>
+                            <p class="summary--stats text-green">2,371,527</p>
+                        </div>
+
+                        <div class="summary--item">
+                            <p class="summary--chart" data-trigger="sparkline" data-type="bar" data-width="5" data-height="38" data-color="#e16123">2,3,7,7,9,11,9,7,9,11,9,7</p>
+
+                            <p class="summary--title">Last Month</p>
+                            <p class="summary--stats text-orange">2,527,371</p>
+                        </div>
+                    </div>
+                    <!-- Summary Widget End -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Header End -->
+
+    <!-- Main Content Start -->
+    <section class="main--content">
+        <div class="panel">
+            <!-- Records Header Start -->
+            <div class="records--header">
+                <div class="title fa-shopping-bag">
+                    <h3 class="h3">Account <a href="#" class="btn btn-sm btn-outline-info">Manage account</a></h3>
+                    <p>Found Total 1,330 Products</p>
+                </div>
+
+                <div class="actions">
+                    <form action="#" class="search flex-wrap flex-md-nowrap">
+                        <input type="text" class="form-control" placeholder="Product Name..." required>
+                        <select name="select" class="form-control">
+                            <option value="" selected>Product Category</option>
+                        </select>
+                        <button type="submit" class="btn btn-rounded"><i class="fa fa-search"></i></button>
+                    </form>
+
+                    <a th:href="@{/admin/user/add}" class="addProduct btn btn-lg btn-rounded btn-warning">Add Account</a>
+                </div>
+                <div th:if="${message != null}"
+                     class="alert alert-success" th:text="${message}"></div>
+            </div>
+            <!-- Records Header End -->
+        </div>
+
+        <div class="panel">
+            <!-- Records List Start -->
+            <div class="records--list" data-title="Account Listing">
+                <table id="recordsListView">
+                    <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th class="not-sortable">Avatar</th>
+                        <th>Username</th>
+                        <th>Full name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th class="not-sortable">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user: ${users}">
+                        <td th:text="${user.getId()}"></td>
+                        <td>
+                            <a href="#" class="btn-link">
+                                <img th:src="@{'/uploads/'+${user.getAvatar()}}" alt="">
+                            </a>
+                        </td>
+                        <td th:text="${user.getUsername()}"></td>
+                        <td th:text="${user.getFullname()}"></td>
+                        <td th:text="${user.getAddress()}"></td>
+                        <td th:text="${user.getPhone()}"></td>
+                        <td>
+                            <div class="dropleft">
+                                <a href="#" class="btn-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+
+                                <div class="dropdown-menu">
+                                    <a th:href="@{/admin/user/authorization(id=${user.getId()})}" class="dropdown-item">Authorization</a>
+                                    <a th:href="@{/admin/user/edit(id=${user.getId()})}" class="dropdown-item">Edit</a>
+                                    <a th:href="@{/admin/user/delete(id=${user.getId()})}"
+                                       onclick="return confirm('Are you sure want to delete it?')" class="dropdown-item">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <ul class="pagination pagination-circular justify-content-center">
+                        <li
+                            th:if="${currentPage>1}" class="page-item">
+                            <a th:href="@{/admin/user/list(page=${currentPage}-1,offset=${offset})}" class="page-link">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        </li>
+                        <li
+                                th:each="pageNumber:${#numbers.sequence(1, totalPage)}"
+                                th:attr="class=${currentPage==pageNumber ? 'active page-item' : 'page-item'}"
+                                th:if="${pageNumber>0}">
+
+                            <a class="page-link" th:href="@{/admin/user/list(page=${pageNumber},offset=${offset})}"
+                               th:text="${pageNumber}"
+                            ></a>
+
+                        </li>
+                        <li
+                            th:if="${currentPage<totalPage}" class="page-item">
+                            <a th:href="@{/admin/user/list(page=${currentPage}+1,offset=${offset})}" class="page-link">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Records List End -->
+        </div>
+
+    </section>
+    <!-- Main Content End -->
+
+</main>
+</body>
+</html>

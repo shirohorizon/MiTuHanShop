@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main class="main--container" layout:fragment="content">
+    <!-- Page Header Start -->
+    <section class="page--header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Page Title Start -->
+                    <h2 class="page--title h5">Edit Products</h2>
+                    <!-- Page Title End -->
+
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="ecommerce.html">Ecommerce</a></li>
+                        <li class="breadcrumb-item active"><span>Edit Products</span></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-6">
+                    <!-- Summary Widget Start -->
+                    <div class="summary--widget">
+                        <div class="summary--item">
+                            <p class="summary--chart" data-trigger="sparkline" data-type="bar" data-width="5" data-height="38" data-color="#009378">2,9,7,9,11,9,7,5,7,7,9,11</p>
+
+                            <p class="summary--title">This Month</p>
+                            <p class="summary--stats text-green">2,371,527</p>
+                        </div>
+
+                        <div class="summary--item">
+                            <p class="summary--chart" data-trigger="sparkline" data-type="bar" data-width="5" data-height="38" data-color="#e16123">2,3,7,7,9,11,9,7,9,11,9,7</p>
+
+                            <p class="summary--title">Last Month</p>
+                            <p class="summary--stats text-orange">2,527,371</p>
+                        </div>
+                    </div>
+                    <!-- Summary Widget End -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Header End -->
+
+    <!-- Main Content Start -->
+    <section class="main--content">
+        <div class="panel">
+            <!-- Records Header Start -->
+            <div class="records--header">
+                <div class="title fa-shopping-bag">
+                    <h3 class="h3">Ecommerce Products <a href="#" class="btn btn-sm btn-outline-info">Edit Products</a></h3>
+                </div>
+            </div>
+            <!-- Records Header End -->
+        </div>
+
+        <div class="panel">
+
+            <!-- Edit Product Start -->
+            <div class="records--body">
+                <div class="title">
+                    <h6 class="h6">Product Details</h6>
+
+                    <a href="#" class="btn btn-rounded btn-danger">Delete Product</a>
+                </div>
+
+                <!-- Tabs Nav Start -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a href="#tab01" data-toggle="tab" class="nav-link active">Basic</a>
+                    </li>
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a href="#tab02" data-toggle="tab" class="nav-link">Meta/SEO</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a href="#tab03" data-toggle="tab" class="nav-link">Images</a>-->
+                    <!--                    </li>-->
+                </ul>
+                <!-- Tabs Nav End -->
+
+                <!-- Tab Content Start -->
+                <div class="tab-content">
+                    <!-- Tab Pane Start -->
+                    <form role="form"
+                          method="post"
+                          enctype="multipart/form-data"
+                          th:action="@{/admin/user/doAuthorization}">
+                        <div th:object="${gModel}" class="tab-pane fade show active" id="tab01">
+                            <input type="hidden" th:field="*{id}">
+                            <div class="form-group row">
+                                <span class="label-text col-md-3 col-form-label">Username: *</span>
+
+                                <div class="col-md-9">
+                                    <input type="text" th:field="*{username}" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <span class="label-text col-md-3 col-form-label">Role Name: *</span>
+                                <div class="col-md-9">
+                                    <input type="text" th:feild="*{role_name}" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <span class="label-text col-md-3 col-form-label">Category:</span>
+                                <div th:if="${rModel}" th:each="rolevalue: ${rModel}" class="col-sm-4">
+                                    <label class = "toggle-switchy" for = "example" data-size = "xl" data-style = "round" data-label = "left">
+                                        <input th:value="${rolevalue.getId()}" name="roles" check type = "checkbox" id = "example">
+                                        <span class = "toggle">
+                                            <span class = "switch"> </span>
+                                        </span>
+                                        <span th:text="${rolevalue.getCode()}" class = "label"> </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-9 offset-md-3">
+                                    <input type="submit" value="Update Product" class="btn btn-rounded btn-success">
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                    <!-- Tab Pane End -->
+                </div>
+                <!-- Tab Content End -->
+            </div>
+            <!-- Edit Product End -->
+        </div>
+    </section>
+    <!-- Main Content End -->
+</main>
+</body>
+</html>

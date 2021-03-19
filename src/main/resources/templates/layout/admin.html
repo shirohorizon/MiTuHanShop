@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" class="no-outlines"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head th:replace="common/admin/head.html">
+
+    <body>
+
+        <!-- Wrapper Start -->
+        <div class="wrapper">
+            <!-- Navbar Start -->
+
+            <header th:replace="common/admin/header.html"></header>
+
+            <!-- Navbar End -->
+
+            <!-- Sidebar Start -->
+            <aside th:replace="common/admin/sidebar.html"></aside>
+            <!-- Sidebar End -->
+
+            <!-- Main Container Start -->
+            <main class="main--container" layout:fragment="content">
+
+
+                <!-- Main Footer Start -->
+                <footer th:replace="common/admin/footer.html"></footer>
+                <!-- Main Footer End -->
+            </main>
+            <!-- Main Container End -->
+        </div>
+        <!-- Wrapper End -->
+
+        <!-- Scripts -->
+        <script th:src="@{/admin/assets/js/jquery.min.js}"></script>
+        <script th:src="@{/admin/assets/js/jquery-ui.min.js}"></script>
+        <script th:src="@{/admin/assets/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/admin/assets/js/perfect-scrollbar.min.js}"></script>
+        <script th:src="@{/admin/assets/js/jquery.sparkline.min.js}"></script>
+        <script th:src="@{/admin/assets/js/raphael.min.js}"></script>
+        <script th:src="@{/admin/assets/js/morris.min.js}"></script>
+        <script th:src="@{/admin/assets/js/select2.min.js}"></script>
+        <script th:src="@{/admin/assets/js/jquery-jvectormap.min.js}"></script>
+        <script th:src="@{/admin/assets/js/jquery-jvectormap-world-mill.min.js}"></script>
+        <script th:src="@{/admin/assets/js/horizontal-timeline.min.js}"></script>
+        <script th:src="@{/admin/assets/js/jquery.validate.min.js}"></script>
+        <script th:src="@{/admin/assets/js/jquery.steps.min.js}"></script>
+        <script th:src="@{/admin/assets/js/dropzone.min.js}"></script>
+        <script th:src="@{/admin/assets/js/ion.rangeSlider.min.js}"></script>
+        <script th:src="@{/admin/assets/js/datatables.min.js}"></script>
+        <script th:src="@{/admin/assets/js/main.js}"></script>
+
+        <!-- Page Level Scripts -->
+
+    </body>
+</html>
