@@ -94,11 +94,13 @@
                         <td th:text="${user.getId()}"></td>
                         <td>
                             <a href="#" class="btn-link">
-                                <img th:src="@{'/uploads/'+${user.getAvatar()}}" alt="">
+                                <img th:src="@{'/uploads/'+${user.getImage()}}" alt="">
                             </a>
                         </td>
                         <td th:text="${user.getUsername()}"></td>
-                        <td th:text="${user.getFullname()}"></td>
+                        <td th:text="${user.getFullName()
+
+                        }"></td>
                         <td th:text="${user.getAddress()}"></td>
                         <td th:text="${user.getPhone()}"></td>
                         <td>
