@@ -45,6 +45,8 @@
                 </div>
             </div>
         </div>
+        <div th:if="${message != null}"
+             class="alert alert-success" th:text="${message}"></div>
     </section>
     <!-- Page Header End -->
 
@@ -52,23 +54,22 @@
     <section class="main--content">
         <div class="panel">
             <div class="panel-heading">
-                <h3 class="panel-title">Edit Account</h3>
-                <div th:if="${message != null}"
-                     class="alert alert-success" th:text="${message}"></div>
+                <h3 class="panel-title">Add Account</h3>
             </div>
 
             <div class="panel-content">
                 <!-- Form Wizard Start -->
-                <form role="form" th:object="${gModel}" th:action="@{/admin/user/doedit}" method="post" id="formWizard" class="form--wizard">
+                <form role="form" th:object="${userEdit}" th:action="@{/admin/user/doedit}"
+                      enctype="multipart/form-data" method="post" id="formWizard" class="form--wizard">
                     <h3>Identification</h3>
+                    <input type="hidden" name="id" th:field="*{id}">
                     <section>
                         <div class="row">
-                            <input type="hidden" th:field="*{id}">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>
                                         <span class="label-text">Full Name: *</span>
-                                        <input th:field="*{fullname}" type="text" name="fullname" placeholder="Jr." class="form-control" required>
+                                        <input th:field="*{fullName}" type="text" name="fullname" placeholder="Jr." class="form-control" required>
                                     </label>
                                 </div>
                             </div>
@@ -106,7 +107,7 @@
                                         <span class="label-text">File Input</span>
                                         <label class="custom-file">
 
-                                            <input  type="file" class="custom-file-input">
+                                            <input type="file" name="file" class="custom-file-input" id="customFile">
                                             <span class="custom-file-label">Choose File</span>
                                         </label>
                                     </label>
@@ -133,7 +134,7 @@
                                 <div class="form-group">
                                     <label>
                                         <span class="label-text">Password: *</span>
-                                        <input type="password" name="password" id="password" class="form-control" required>
+                                        <input th:field="*{password}" type="password" name="password" id="password" class="form-control" required>
                                     </label>
                                 </div>
                             </div>
@@ -152,9 +153,9 @@
                     <h3>Completed</h3>
                     <section>
                         <div class="jumbotron text-center">
-                            <h2 class="h1 fw--600 text-dark mb-2">Edit Successfull</h2>
+                            <h2 class="h1 fw--600 text-dark mb-2">Successfull</h2>
 
-                            <button type="submit" class="btn btn-rounded btn-info">Proceed To User Profile</button>
+                            <button type="submit" class="btn btn-rounded btn-info">Add Account</button>
                         </div>
                     </section>
                 </form>

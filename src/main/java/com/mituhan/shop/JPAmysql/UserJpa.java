@@ -22,4 +22,9 @@ public interface UserJpa extends
 
     @Query("SELECT e FROM UserModel e WHERE e.username = :username")
     UserModel findByUsername(@Param("username") String username);
+
+    @Query("SELECT e FROM UserModel e join fetch e.roles WHERE e.username = :username")
+    UserModel findUserJoinRoleByUsername(@Param("username") String username);
+
+
 }

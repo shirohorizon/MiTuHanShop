@@ -50,7 +50,50 @@ public class UserServiceImpl implements UserService {
         Date datetime=new java.sql.Date(millis);
         user.setCreateddate(datetime);
         UserModel list = (UserModel) session.getAttribute("username");
-        user.setCreatedby(list.getUsername());
+        //test add
+        user.setCreatedby("admin");
+        UserModel userModel = saveFileImage(user,file);
+        if(userModel != null){
+            userJpa.save(userModel);
+            return "success";
+        }else {
+            return "error";
+        }
+    }
+
+    @Override
+    public Long editUser(UserModel user, MultipartFile file, HttpSession session) {
+        user.setPassword(Helpers.getMd5(user.getPassword()));
+        user.setStatus(1);
+        long millis=System.currentTimeMillis();
+        Date datetime=new java.sql.Date(millis);
+        user.setModifieddate(datetime);
+        UserModel list = (UserModel) session.getAttribute("username");
+        //test add
+        user.setModifiedby("admin");
+        UserModel roles = userJpa.findUserJoinRoleByUsername(user.getUsername());
+        if(roles != null){
+            user.setRoles(roles.getRoles());
+        }
+        deleteFileImage(user);
+        UserModel userModel = saveFileImage(user,file);
+        if(userModel != null){
+            userJpa.save(userModel);
+            UserModel userUserRole = userJpa.findByUsername(userModel.getUsername());
+            return userUserRole.getId();
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public UserModel findUserById(Long id) {
+        return userJpa.findById(id).get();
+    }
+
+
+
+    public UserModel saveFileImage(UserModel user, MultipartFile file){
         try {
             Date date = new Date();
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -72,20 +115,20 @@ public class UserServiceImpl implements UserService {
             Files.write(path, bytes);
             user.setImage(saveFolder.replace(UPLOADED_FOLDER, "")
                     + filename); //11_2020/tenfile.png
-            userJpa.save(user);
-            return "success";
-
+            return user;
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"+e.getMessage();
-
+            return null;
         }
-
     }
 
-    @Override
-    public UserModel getUserById(Long id) {
-        return userJpa.findById(id).get();
+    public void deleteFileImage(UserModel user){
+        try {
+            File file = new File(UPLOADED_FOLDER + user.getImage());
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

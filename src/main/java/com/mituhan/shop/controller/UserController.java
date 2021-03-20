@@ -32,7 +32,6 @@ public class UserController {
         Page<UserModel> users = userService.getUsers(PageRequest.of(page - 1, offset));
 
         model.addAttribute("users", users.getContent());
-
         Long totalRecord = userService.getTotal();
         Double totalPage = Math.ceil((double)totalRecord / offset);
         model.addAttribute("totalPage", totalPage);
@@ -48,6 +47,7 @@ public class UserController {
         return "views/admin/user/add";
     }
 
+
     @PostMapping("admin/user/doadd")
     public String doAdd(UserModel gModel, RedirectAttributes attributes, @RequestParam(name = "file") MultipartFile file, HttpSession session) {
         UserModel user = gModel;
@@ -56,39 +56,46 @@ public class UserController {
             String rMessage = userService.saveUser(user,file,session);
             if(rMessage == "success"){
                 attributes.addFlashAttribute("message", "Add user successfully");
-            }else if (rMessage.indexOf("error") != 0){
-                attributes.addFlashAttribute("error", "Add failed " + rMessage);
+            }else if (rMessage == "error"){
+                attributes.addFlashAttribute("error", "Add failed ");
             }
             return "redirect:/admin/user/add";
         }else {
-            attributes.addFlashAttribute("message", "user already exists");
+            attributes.addFlashAttribute("message", "Account already exists");
             return "redirect:/admin/user/add";
         }
     }
 
 
     @GetMapping("admin/user/edit")
-    public String edit(Model model, @RequestParam Long id) {
-        UserModel user = userService.getUserById(id);
-        model.addAttribute("gModel", user);
-        return "views/admin/user/edit";
+    public String edit(Model model, RedirectAttributes attributes, @RequestParam Long id) {
+        UserModel user = userService.findUserById(id);
+        if(user != null){
+            model.addAttribute("userEdit", user);
+            return "views/admin/user/edit";
+        }else{
+            attributes.addFlashAttribute("message", "id does not exist ");
+            return "views/admin/user/index";
+        }
+
+
     }
 
-//    @PostMapping("admin/user/doedit")
-//    public String doEdit(UserModel gModel, @RequestParam Long id,
-//                         RedirectAttributes attributes,
-//                         @RequestParam(name = "file") MultipartFile file, HttpSession session) {
-//        UserModel user = (UserModel) gModel;
-//        UserModel list = (UserModel) session.getAttribute("username");
-//        list = userService.findByUsernameAndPasswordJoinRole(user.getUsername(), user.getPassword(), user.getStatus());
-//        if (list != null){
-//            user.setRole_name(list.getRole_name());
-//            user.setRolevalues(list.getRolevalues());
-//        }
-//        userService.saveUser(user,file,session);
-//        attributes.addFlashAttribute("message", "edit user successfully");
-//        return "redirect:/admin/user/edit?id=" + id;
-//    }
+    @PostMapping("admin/user/doedit")
+    public String doEdit(UserModel gModel,
+                         RedirectAttributes attributes, @RequestParam(name = "file") MultipartFile file, HttpSession session) {
+        UserModel user = (UserModel) gModel;
+        UserModel checkUser = userService.findUserById(user.getId());
+        if (checkUser != null){
+            Long id = userService.editUser(user,file,session);
+            attributes.addFlashAttribute("message", "edit user successfully");
+            return "redirect:/admin/user/edit?id=" + id;
+        }else{
+            attributes.addFlashAttribute("message", "Account does not exists");
+            return "redirect:/admin/user/edit?id=" + user.getId();
+        }
+
+    }
 
 
 }

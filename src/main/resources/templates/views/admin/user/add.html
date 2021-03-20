@@ -45,6 +45,8 @@
                 </div>
             </div>
         </div>
+        <div th:if="${message != null}"
+             class="alert alert-success" th:text="${message}"></div>
     </section>
     <!-- Page Header End -->
 
@@ -66,7 +68,7 @@
                                 <div class="form-group">
                                     <label>
                                         <span class="label-text">Full Name: *</span>
-                                        <input th:field="*{fullname}" type="text" name="fullname" placeholder="Jr." class="form-control" required>
+                                        <input th:field="*{fullName}" type="text" name="fullname" placeholder="Jr." class="form-control" required>
                                     </label>
                                 </div>
                             </div>

@@ -14,5 +14,6 @@ public interface UserService {
     public Page<UserModel> getUsers(Pageable pageable);
     public UserModel findByUsername(String username);
     public String saveUser(UserModel user, MultipartFile file, HttpSession session);
-    public UserModel getUserById(Long id);
+    public UserModel findUserById(Long id);
+    public Long editUser(UserModel user, MultipartFile file, HttpSession session);
 }
