@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.sql.Timestamp;
 
 @Controller
@@ -94,8 +95,13 @@ public class UserController {
             attributes.addFlashAttribute("message", "Account does not exists");
             return "redirect:/admin/user/edit?id=" + user.getId();
         }
-
     }
 
+    @GetMapping("admin/user/delete")
+    public String delete(@RequestParam Long id) {
+        UserModel user = userService.findUserById(id);
+        userService.deleteUser(user,id);
+        return "redirect:/admin/user/list";
+    }
 
 }

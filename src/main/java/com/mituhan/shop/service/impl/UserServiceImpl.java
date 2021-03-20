@@ -91,6 +91,11 @@ public class UserServiceImpl implements UserService {
         return userJpa.findById(id).get();
     }
 
+    @Override
+    public void deleteUser(UserModel user, Long id) {
+        deleteFileImage(user);
+        userJpa.deleteById(id);
+    }
 
 
     public UserModel saveFileImage(UserModel user, MultipartFile file){

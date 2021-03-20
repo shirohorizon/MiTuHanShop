@@ -16,4 +16,5 @@ public interface UserService {
     public String saveUser(UserModel user, MultipartFile file, HttpSession session);
     public UserModel findUserById(Long id);
     public Long editUser(UserModel user, MultipartFile file, HttpSession session);
+    public void deleteUser(UserModel user, Long id);
 }
