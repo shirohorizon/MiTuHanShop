@@ -94,7 +94,7 @@
                         <td th:text="${user.getId()}"></td>
                         <td>
                             <a href="#" class="btn-link">
-                                <img th:src="@{'/uploads/'+${user.getImage()}}" alt="">
+                                <img th:if="${user.getImage() != null}" th:src="@{'/uploads/'+${user.getImage()}}" alt="">
                             </a>
                         </td>
                         <td th:text="${user.getUsername()}"></td>
