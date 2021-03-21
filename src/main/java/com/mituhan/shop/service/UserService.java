@@ -9,12 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface UserService {
     public Long getTotal();
 
-    public Page<UserModel> getUsers(Pageable pageable);
     public UserModel findByUsername(String username);
     public String saveUser(UserModel user, MultipartFile file, HttpSession session);
     public UserModel findUserById(Long id);
@@ -22,6 +22,6 @@ public interface UserService {
     public void deleteUser(UserModel user, Long id);
     public List<RoleModel> findRoleAll();
     public void authoUser(Long id, List<RoleModel> roles);
-    public List<UserModel> findUsersWithPartOfName(String username);
+    public Page<UserModel> findAllByUsernameContaining(Optional<String> username, Pageable pageable);
 
 }

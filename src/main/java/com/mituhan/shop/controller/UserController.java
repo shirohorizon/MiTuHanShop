@@ -1,6 +1,5 @@
 package com.mituhan.shop.controller;
 
-import com.mituhan.shop.JPAmysql.UserJpa;
 import com.mituhan.shop.model.RoleModel;
 import com.mituhan.shop.model.UserModel;
 import com.mituhan.shop.service.UserService;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -30,9 +30,10 @@ public class UserController {
     //lấy danh sách user theo limit
     @GetMapping("admin/user/list")
     public String list(Model model,
+                       @RequestParam(defaultValue = "") Optional<String> keyword,
                        @RequestParam(defaultValue = "1") int page,
                        @RequestParam(defaultValue = "100") int offset) {
-        Page<UserModel> users = userService.getUsers(PageRequest.of(page - 1, offset));
+        Page<UserModel> users = (Page<UserModel>) userService.findAllByUsernameContaining(keyword, PageRequest.of(page - 1, offset));
         model.addAttribute("users", users.getContent());
         Long totalRecord = userService.getTotal();
         Double totalPage = Math.ceil((double)totalRecord / offset);
@@ -121,17 +122,6 @@ public class UserController {
     public String doAuthorization(@RequestParam Long id, @RequestParam(value = "roles") List<RoleModel> roles) {
         userService.authoUser(id, roles);
         return "redirect:/admin/user/authorization?id="+id;
-    }
-
-    //search account by username
-    //lấy danh sách user theo limit
-    @GetMapping("admin/user/search")
-    public String search(Model model, @RequestParam(name = "keyword") String keyword) {
-        List<UserModel> user = (List<UserModel>) userService.findUsersWithPartOfName(keyword);
-        if (user != null){
-            model.addAttribute("users", user);
-        }
-        return "views/admin/user/index";
     }
 
 }

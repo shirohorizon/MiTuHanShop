@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserJpa extends
@@ -20,7 +21,7 @@ public interface UserJpa extends
     @Query("SELECT COUNT(u) FROM UserModel u")
     public long getTotalUser();
 
-    Page<UserModel> findAll(Pageable pageable);
+    Page<UserModel> findAllByUsernameContaining(Optional<String> username, Pageable pageable);
 
     @Query("SELECT e FROM UserModel e WHERE e.username = :username")
     UserModel findByUsername(@Param("username") String username);

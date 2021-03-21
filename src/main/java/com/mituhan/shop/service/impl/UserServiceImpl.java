@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -39,11 +40,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long getTotal() {
         return userJpa.getTotalUser();
-    }
-
-    @Override
-    public Page<UserModel> getUsers(Pageable pageable) {
-        return userJpa.findAll(pageable);
     }
 
     @Override
@@ -119,8 +115,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserModel> findUsersWithPartOfName(String username) {
-        return userJpa.findUsersWithPartOfName(username);
+    public Page<UserModel> findAllByUsernameContaining(Optional<String> username, Pageable pageable) {
+        return (Page<UserModel>) userJpa.findAllByUsernameContaining(username,pageable);
     }
 
 
