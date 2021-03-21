@@ -1,7 +1,9 @@
 package com.mituhan.shop.service.impl;
 
+import com.mituhan.shop.JPAmysql.RoleJpa;
 import com.mituhan.shop.JPAmysql.UserJpa;
 import com.mituhan.shop.helpers.Helpers;
+import com.mituhan.shop.model.RoleModel;
 import com.mituhan.shop.model.UserModel;
 import com.mituhan.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,17 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserJpa userJpa;
+
+    @Autowired
+    private RoleJpa roleJpa;
 
     @Value("${config.upload_folder}")
     String UPLOADED_FOLDER;
@@ -95,6 +102,25 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(UserModel user, Long id) {
         deleteFileImage(user);
         userJpa.deleteById(id);
+    }
+
+    @Override
+    public List<RoleModel> findRoleAll() {
+        return roleJpa.findAll();
+    }
+
+    @Override
+    public void authoUser(Long id, List<RoleModel> roles) {
+        UserModel user = findUserById(id);
+        roles.forEach(r->{
+            user.setRoles((Set<RoleModel>) r);
+        });
+        userJpa.save(user);
+    }
+
+    @Override
+    public List<UserModel> findUsersWithPartOfName(String username) {
+        return userJpa.findUsersWithPartOfName(username);
     }
 
 

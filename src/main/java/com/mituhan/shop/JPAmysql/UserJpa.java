@@ -10,6 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserJpa extends
         CrudRepository<UserModel, Long>,
@@ -26,5 +28,7 @@ public interface UserJpa extends
     @Query("SELECT e FROM UserModel e join fetch e.roles WHERE e.username = :username")
     UserModel findUserJoinRoleByUsername(@Param("username") String username);
 
+    @Query("SELECT u FROM UserModel u WHERE u.username LIKE %:username%")
+    List<UserModel> findUsersWithPartOfName(@Param("username") String username);
 
 }

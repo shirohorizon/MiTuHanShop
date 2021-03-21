@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -29,9 +31,8 @@ public class UserController {
     @GetMapping("admin/user/list")
     public String list(Model model,
                        @RequestParam(defaultValue = "1") int page,
-                       @RequestParam(defaultValue = "15") int offset) {
+                       @RequestParam(defaultValue = "100") int offset) {
         Page<UserModel> users = userService.getUsers(PageRequest.of(page - 1, offset));
-
         model.addAttribute("users", users.getContent());
         Long totalRecord = userService.getTotal();
         Double totalPage = Math.ceil((double)totalRecord / offset);
@@ -41,7 +42,7 @@ public class UserController {
         return "views/admin/user/index";
     }
 
-
+    //---------------thêm user------------------//
     @GetMapping("admin/user/add")
     public String add(Model model) {
         model.addAttribute("user", new UserModel());
@@ -67,7 +68,7 @@ public class UserController {
         }
     }
 
-
+    //-------------chỉnh sửa user---------------//
     @GetMapping("admin/user/edit")
     public String edit(Model model, RedirectAttributes attributes, @RequestParam Long id) {
         UserModel user = userService.findUserById(id);
@@ -97,11 +98,40 @@ public class UserController {
         }
     }
 
+    //-------------------xóa user--------------//
     @GetMapping("admin/user/delete")
     public String delete(@RequestParam Long id) {
         UserModel user = userService.findUserById(id);
         userService.deleteUser(user,id);
         return "redirect:/admin/user/list";
+    }
+
+    //---------------user role based----------------//
+    @GetMapping("admin/user/authorization")
+    public String authorization(Model model, @RequestParam Long id) {
+        UserModel user = userService.findUserById(id);
+        List<RoleModel> roles = (List<RoleModel>) userService.findRoleAll();
+        model.addAttribute("uModel", user);
+        model.addAttribute("rModel",roles);
+        return "views/admin/user/authorization";
+    }
+
+    //chưa test
+    @PostMapping("admin/user/doAuthorization")
+    public String doAuthorization(@RequestParam Long id, @RequestParam(value = "roles") List<RoleModel> roles) {
+        userService.authoUser(id, roles);
+        return "redirect:/admin/user/authorization?id="+id;
+    }
+
+    //search account by username
+    //lấy danh sách user theo limit
+    @GetMapping("admin/user/search")
+    public String search(Model model, @RequestParam(name = "keyword") String keyword) {
+        List<UserModel> user = (List<UserModel>) userService.findUsersWithPartOfName(keyword);
+        if (user != null){
+            model.addAttribute("users", user);
+        }
+        return "views/admin/user/index";
     }
 
 }

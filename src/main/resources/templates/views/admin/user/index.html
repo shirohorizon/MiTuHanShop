@@ -58,8 +58,8 @@
                 </div>
 
                 <div class="actions">
-                    <form action="#" class="search flex-wrap flex-md-nowrap">
-                        <input type="text" class="form-control" placeholder="Product Name..." required>
+                    <form th:action="@{/admin/user/search}" method="get" class="search flex-wrap flex-md-nowrap">
+                        <input type="text" name="keyword" class="form-control" placeholder="Account Userame..." required>
                         <select name="select" class="form-control">
                             <option value="" selected>Product Category</option>
                         </select>
@@ -98,9 +98,7 @@
                             </a>
                         </td>
                         <td th:text="${user.getUsername()}"></td>
-                        <td th:text="${user.getFullName()
-
-                        }"></td>
+                        <td th:text="${user.getFullName()}"></td>
                         <td th:text="${user.getAddress()}"></td>
                         <td th:text="${user.getPhone()}"></td>
                         <td>
@@ -119,30 +117,30 @@
                     </tbody>
                 </table>
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <ul class="pagination pagination-circular justify-content-center">
-                        <li
-                            th:if="${currentPage>1}" class="page-item">
-                            <a th:href="@{/admin/user/list(page=${currentPage}-1,offset=${offset})}" class="page-link">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                        </li>
-                        <li
-                                th:each="pageNumber:${#numbers.sequence(1, totalPage)}"
-                                th:attr="class=${currentPage==pageNumber ? 'active page-item' : 'page-item'}"
-                                th:if="${pageNumber>0}">
+<!--                    <ul class="pagination pagination-circular justify-content-center">-->
+<!--                        <li-->
+<!--                            th:if="${currentPage>1}" class="page-item">-->
+<!--                            <a th:href="@{/admin/user/list(page=${currentPage}-1,offset=${offset})}" class="page-link">-->
+<!--                                <i class="fa fa-angle-left"></i>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li-->
+<!--                                th:each="pageNumber:${#numbers.sequence(1, totalPage)}"-->
+<!--                                th:attr="class=${currentPage==pageNumber ? 'active page-item' : 'page-item'}"-->
+<!--                                th:if="${pageNumber>0}">-->
 
-                            <a class="page-link" th:href="@{/admin/user/list(page=${pageNumber},offset=${offset})}"
-                               th:text="${pageNumber}"
-                            ></a>
+<!--                            <a class="page-link" th:href="@{/admin/user/list(page=${pageNumber},offset=${offset})}"-->
+<!--                               th:text="${pageNumber}"-->
+<!--                            ></a>-->
 
-                        </li>
-                        <li
-                            th:if="${currentPage<totalPage}" class="page-item">
-                            <a th:href="@{/admin/user/list(page=${currentPage}+1,offset=${offset})}" class="page-link">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
+<!--                        </li>-->
+<!--                        <li-->
+<!--                            th:if="${currentPage<totalPage}" class="page-item">-->
+<!--                            <a th:href="@{/admin/user/list(page=${currentPage}+1,offset=${offset})}" class="page-link">-->
+<!--                                <i class="fa fa-angle-right"></i>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
                 </div>
             </div>
             <!-- Records List End -->
