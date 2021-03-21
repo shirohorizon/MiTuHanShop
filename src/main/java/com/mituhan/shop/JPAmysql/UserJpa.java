@@ -1,5 +1,6 @@
 package com.mituhan.shop.JPAmysql;
 
+import com.mituhan.shop.model.RoleModel;
 import com.mituhan.shop.model.UserModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,13 +24,13 @@ public interface UserJpa extends
 
     Page<UserModel> findAllByUsernameContaining(Optional<String> username, Pageable pageable);
 
+    Page<UserModel> findAllByRolesContaining(RoleModel username, Pageable pageable);
+
     @Query("SELECT e FROM UserModel e WHERE e.username = :username")
     UserModel findByUsername(@Param("username") String username);
 
     @Query("SELECT e FROM UserModel e join fetch e.roles WHERE e.username = :username")
     UserModel findUserJoinRoleByUsername(@Param("username") String username);
 
-    @Query("SELECT u FROM UserModel u WHERE u.username LIKE %:username%")
-    List<UserModel> findUsersWithPartOfName(@Param("username") String username);
 
 }

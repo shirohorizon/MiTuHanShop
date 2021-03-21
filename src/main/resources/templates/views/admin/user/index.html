@@ -18,8 +18,8 @@
                     <!-- Page Title End -->
 
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="ecommerce.html">Ecommerce</a></li>
-                        <li class="breadcrumb-item active"><span>Products</span></li>
+                        <li class="breadcrumb-item"><a href="#">Ecommerce</a></li>
+                        <li class="breadcrumb-item active"><span>list</span></li>
                     </ul>
                 </div>
 
@@ -54,18 +54,18 @@
             <div class="records--header">
                 <div class="title fa-shopping-bag">
                     <h3 class="h3">Account <a href="#" class="btn btn-sm btn-outline-info">Manage account</a></h3>
-                    <p>Found Total 1,330 Products</p>
+                    <p>Found Total <p th:text="${totalUser}"></p> Products</p>
                 </div>
 
                 <div class="actions">
                     <form th:action="@{/admin/user/list}" method="get" class="search flex-wrap flex-md-nowrap">
                         <input type="text" name="keyword" class="form-control" placeholder="Account Userame..." >
-                        <select name="select" class="form-control">
-                            <option value="" selected>Product Category</option>
+                        <select  name="role" class="form-control">
+                            <option value="">user roles</option>
+                            <option th:each="role:${roles}" th:text="${role.getName()}" th:value="${role.getId()}">user roles</option>
                         </select>
                         <button type="submit" class="btn btn-rounded"><i class="fa fa-search"></i></button>
                     </form>
-
                     <a th:href="@{/admin/user/add}" class="addProduct btn btn-lg btn-rounded btn-warning">Add Account</a>
                 </div>
                 <div th:if="${message != null}"

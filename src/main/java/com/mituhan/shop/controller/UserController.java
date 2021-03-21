@@ -31,12 +31,28 @@ public class UserController {
     @GetMapping("admin/user/list")
     public String list(Model model,
                        @RequestParam(defaultValue = "") Optional<String> keyword,
+                       @RequestParam(defaultValue = "") RoleModel role,
                        @RequestParam(defaultValue = "1") int page,
                        @RequestParam(defaultValue = "100") int offset) {
-        Page<UserModel> users = (Page<UserModel>) userService.findAllByUsernameContaining(keyword, PageRequest.of(page - 1, offset));
-        model.addAttribute("users", users.getContent());
+        if(role == null){
+            //lấy users theo keyword và phân trang nếu keyword = null -> findAll
+            Page<UserModel> users = (Page<UserModel>) userService.findAllByUsernameContaining(keyword, PageRequest.of(page - 1, offset));
+            model.addAttribute("users", users.getContent());
+        }else {
+            Page<UserModel> users = userService.findAllByRolesContaining(role, PageRequest.of(page - 1, offset));
+            if(users.isEmpty()){
+                model.addAttribute("users", users.getContent());
+            }else{
+                model.addAttribute("users", "");
+            }
+
+        }
+
+        Page<RoleModel> roles = userService.fildRoleAll(PageRequest.of(page - 1, offset));
+        model.addAttribute("roles", roles);
         Long totalRecord = userService.getTotal();
         Double totalPage = Math.ceil((double)totalRecord / offset);
+        model.addAttribute("totalUser", totalRecord);
         model.addAttribute("totalPage", totalPage);
         model.addAttribute("offset", offset);
         model.addAttribute("currentPage", page);

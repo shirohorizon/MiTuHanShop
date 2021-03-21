@@ -119,6 +119,15 @@ public class UserServiceImpl implements UserService {
         return (Page<UserModel>) userJpa.findAllByUsernameContaining(username,pageable);
     }
 
+    @Override
+    public Page<RoleModel> fildRoleAll(Pageable pageable) {
+        return roleJpa.findAll(pageable);
+    }
+
+    @Override
+    public Page<UserModel> findAllByRolesContaining(RoleModel username, Pageable pageable) {
+        return (Page<UserModel>) userJpa.findAllByRolesContaining(username,pageable);
+    }
 
     public UserModel saveFileImage(UserModel user, MultipartFile file){
         try {
