@@ -6,6 +6,8 @@ import com.mituhan.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,30 +34,22 @@ public class UserController {
     public String list(Model model,
                        @RequestParam(defaultValue = "") Optional<String> keyword,
                        @RequestParam(defaultValue = "") RoleModel role,
-                       @RequestParam(defaultValue = "1") int page,
-                       @RequestParam(defaultValue = "100") int offset) {
+                       @PageableDefault(size = 100) Pageable pageable) {
+        Page<UserModel> users;
         if(role == null){
             //lấy users theo keyword và phân trang nếu keyword = null -> findAll
-            Page<UserModel> users = (Page<UserModel>) userService.findAllByUsernameContaining(keyword, PageRequest.of(page - 1, offset));
-            model.addAttribute("users", users.getContent());
+            users = (Page<UserModel>) userService.findAllByUsernameContaining(keyword, pageable);
+            model.addAttribute("users", users);
         }else {
-            Page<UserModel> users = userService.findAllByRolesContaining(role, PageRequest.of(page - 1, offset));
+            users = userService.findAllByRolesContaining(role, pageable);
             if(users.isEmpty()){
-                model.addAttribute("users", users.getContent());
+                model.addAttribute("users", users);
             }else{
                 model.addAttribute("users", "");
             }
-
         }
-
-        Page<RoleModel> roles = userService.fildRoleAll(PageRequest.of(page - 1, offset));
+        Page<RoleModel> roles = userService.fildRoleAll(pageable);
         model.addAttribute("roles", roles);
-        Long totalRecord = userService.getTotal();
-        Double totalPage = Math.ceil((double)totalRecord / offset);
-        model.addAttribute("totalUser", totalRecord);
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("offset", offset);
-        model.addAttribute("currentPage", page);
         return "views/admin/user/index";
     }
 
