@@ -45,7 +45,9 @@ public class ProductController {
     }
 
     //---------------thêm product---------------------//
+    
     //---------------Sửa product----------------------//
+
     //---------------xóa product----------------------//
     @GetMapping("admin/product/delete")
     public String delete(@RequestParam Long id) {

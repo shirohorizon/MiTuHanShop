@@ -51,10 +51,10 @@ public class UserServiceImpl implements UserService {
         user.setStatus(1);
         long millis=System.currentTimeMillis();
         Date datetime=new java.sql.Date(millis);
-        user.setCreateddate(datetime);
+        user.setCreatedDate(datetime);
         UserModel list = (UserModel) session.getAttribute("username");
         //test add
-        user.setCreatedby("admin");
+        user.setCreatedBy("admin");
         UserModel userModel = saveFileImage(user,file);
         if(userModel != null){
             userJpa.save(userModel);
@@ -70,10 +70,10 @@ public class UserServiceImpl implements UserService {
         user.setStatus(1);
         long millis=System.currentTimeMillis();
         Date datetime=new java.sql.Date(millis);
-        user.setModifieddate(datetime);
+        user.setModifiedDate(datetime);
         UserModel list = (UserModel) session.getAttribute("username");
         //test add
-        user.setModifiedby("admin");
+        user.setModifiedBy("admin");
         UserModel roles = userJpa.findUserJoinRoleByUsername(user.getUsername());
         if(roles != null){
             user.setRoles(roles.getRoles());

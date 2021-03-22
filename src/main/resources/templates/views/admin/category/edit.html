@@ -50,119 +50,50 @@
 
     <!-- Main Content Start -->
     <section class="main--content">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Edit Account</h3>
+        <div class="col-md-12">
+            <!-- Panel Start -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Category</h3>
+                </div>
                 <div th:if="${message != null}"
                      class="alert alert-success" th:text="${message}"></div>
-            </div>
 
-            <div class="panel-content">
-                <!-- Form Wizard Start -->
-                <form role="form" th:object="${gModel}" th:action="@{/admin/user/doedit}" method="post" id="formWizard" class="form--wizard">
-                    <h3>Identification</h3>
-                    <section>
-                        <div class="row">
-                            <input type="hidden" th:field="*{id}">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">Full Name: *</span>
-                                        <input th:field="*{fullname}" type="text" name="fullname" placeholder="Jr." class="form-control" required>
-                                    </label>
-                                </div>
-                            </div>
+                <div th:if="${error != null}"
+                     class="alert alert-danger" th:text="${error}"></div>
+                <form role="form" th:object="${category}"
+                      method="post"
+                      enctype="multipart/form-data"
+                      th:action="@{/admin/category/doadd}">
+                    <div class="panel-content pt-5">
+                        <div class="form-inline">
+                            <label class="mr-3  mb-3">
+                                <span class="label-text">Name: </span>
+                                <input type="text" th:field="*{name}" class="form-control">
+                            </label>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">Email: *</span>
-                                        <input th:field="*{email}" type="email" name="email" class="form-control" required>
-                                    </label>
-                                </div>
-                            </div>
+                            <label class="mr-3  mb-3">
+                                <span class="label-text">Full Name: </span>
+                                <select class="form-control" th:field="*{parent_id}">
+                                    <option value="0">No parent</option>
+                                    <option th:each="parent : ${parents}"
+                                            th:value="${parent.getId()}"
+                                            th:text="${parent.getName()}">
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">Phone:</span>
-                                        <input th:field="*{phone}" type="tel" name="phone" class="form-control">
-                                    </label>
-                                </div>
-                            </div>
+                                    </option>
+                                </select>
+                            </label>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">Address: *</span>
-                                        <input th:field="*{address}" type="text" name="address" class="form-control" required>
-                                    </label>
-                                </div>
-                            </div>
-                            <!-- Form Group Start -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">File Input</span>
-                                        <label class="custom-file">
-
-                                            <input  type="file" class="custom-file-input">
-                                            <span class="custom-file-label">Choose File</span>
-                                        </label>
-                                    </label>
-
-                                </div>
-                            </div>
-                            <!-- Form Group End -->
+                            <input type="submit" value="Submit" class="btn btn-sm btn-rounded btn-success mr-2  mb-3">
+                            <button type="button" class="btn btn-sm btn-rounded btn-outline-secondary mb-3">Cancel</button>
                         </div>
-                    </section>
-
-                    <h3>Login Info</h3>
-                    <section>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">Username: *</span>
-                                        <input th:field="*{username}" type="text" name="username" class="form-control" required>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">Password: *</span>
-                                        <input type="password" name="password" id="password" class="form-control" required>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>
-                                        <span class="label-text">Confirm Password: *</span>
-                                        <input type="password" name="cpassword" class="form-control" required>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <h3>Completed</h3>
-                    <section>
-                        <div class="jumbotron text-center">
-                            <h2 class="h1 fw--600 text-dark mb-2">Edit Successfull</h2>
-
-                            <button type="submit" class="btn btn-rounded btn-info">Proceed To User Profile</button>
-                        </div>
-                    </section>
+                    </div>
                 </form>
-                <!-- Form Wizard End -->
             </div>
-        </div>
+
+            <!-- Panel End -->
+            <!-- Main Content End --></div>
     </section>
-    <!-- Main Content End -->
 </main>
 </body>
 </html>

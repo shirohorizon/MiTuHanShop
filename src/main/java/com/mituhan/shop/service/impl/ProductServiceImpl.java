@@ -3,8 +3,6 @@ package com.mituhan.shop.service.impl;
 import com.mituhan.shop.JPAmysql.ProductJpa;
 import com.mituhan.shop.model.CategoryModel;
 import com.mituhan.shop.model.ProductModel;
-import com.mituhan.shop.model.RoleModel;
-import com.mituhan.shop.model.UserModel;
 import com.mituhan.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

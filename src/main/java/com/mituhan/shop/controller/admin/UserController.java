@@ -49,6 +49,7 @@ public class UserController {
             }
         }
         List<RoleModel> roles = (List<RoleModel>) userService.findRoleAll();
+        model.addAttribute("totalUser", userService.getTotal());
         model.addAttribute("roles", roles);
         return "views/admin/user/index";
     }
@@ -87,7 +88,7 @@ public class UserController {
             model.addAttribute("userEdit", user);
             return "views/admin/user/edit";
         }else{
-            attributes.addFlashAttribute("message", "id does not exist ");
+            attributes.addFlashAttribute("message", "user does not exist ");
             return "views/admin/user/index";
         }
 
@@ -111,9 +112,10 @@ public class UserController {
 
     //-------------------xóa user--------------//
     @GetMapping("admin/user/delete")
-    public String delete(@RequestParam Long id) {
+    public String delete(@RequestParam Long id, RedirectAttributes attributes) {
         UserModel user = userService.findUserById(id);
         userService.deleteUser(user,id);
+        attributes.addFlashAttribute("message", "deleted users");
         return "redirect:/admin/user/list";
     }
 

@@ -32,13 +32,13 @@ public class UserModel {
     @Column(name = "image")
     private String image;
     @Column(name = "createddate")
-    private Date createddate;
+    private Date createdDate;
     @Column(name = "modifieddate")
-    private Date modifieddate;
+    private Date modifiedDate;
     @Column(name = "createdby")
-    private String createdby;
+    private String createdBy;
     @Column(name = "modifiedby")
-    private String modifiedby;
+    private String modifiedBy;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {

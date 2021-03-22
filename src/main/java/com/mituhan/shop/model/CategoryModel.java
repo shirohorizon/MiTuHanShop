@@ -5,6 +5,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,4 +35,13 @@ public class CategoryModel {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = {CascadeType.ALL})
     private Set<ProductModel> Products = new HashSet<ProductModel>();
+
+    @Column(name = "createddate")
+    private Date createdDate;
+    @Column(name = "modifieddate")
+    private Date modifiedDate;
+    @Column(name = "createdby")
+    private String createdBy;
+    @Column(name = "modifiedby")
+    private String modifiedBy;
 }
