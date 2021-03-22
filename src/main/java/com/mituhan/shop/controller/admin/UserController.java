@@ -48,7 +48,7 @@ public class UserController {
                 model.addAttribute("users", "");
             }
         }
-        Page<RoleModel> roles = userService.fildRoleAll(pageable);
+        List<RoleModel> roles = (List<RoleModel>) userService.findRoleAll();
         model.addAttribute("roles", roles);
         return "views/admin/user/index";
     }

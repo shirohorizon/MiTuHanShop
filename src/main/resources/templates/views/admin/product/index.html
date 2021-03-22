@@ -80,6 +80,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>
+                        <th>Images</th>
                         <th>Category</th>
                         <th>Quantity</th>
                         <th>Status</th>
@@ -90,7 +91,12 @@
                     <tr th:each="product: ${products}">
                         <td th:text="${product.getId()}"></td>
                         <td th:text="${product.getName()}"></td>
-                        <td>1</td>
+                        <td>
+                            <a href="#" class="btn-link">
+                                <img th:if="${product.getImage() != null}" th:src="@{'/uploads/'+${product.getImage()}}" alt="">
+                            </a>
+                        </td>
+                        <td th:text="${product.category.getName()}"></td>
                         <td th:text="${product.getQuantity()}"></td>
                         <td th:text="${product.getStatus()}"></td>
                         <td>
@@ -131,30 +137,11 @@
 <!--                    </tbody>-->
                 </table>
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <ul class="pagination pagination-circular justify-content-center">
-                        <li
-                            th:if="${currentPage>1}" class="page-item">
-                            <a th:href="@{/admin/product/list(page=${currentPage}-1,offset=${offset})}" class="page-link">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                        </li>
-                        <li
-                                th:each="pageNumber:${#numbers.sequence(1, totalPage)}"
-                                th:attr="class=${currentPage==pageNumber ? 'active page-item' : 'page-item'}"
-                                th:if="${pageNumber>0}">
-
-                            <a class="page-link" th:href="@{/admin/product/list(page=${pageNumber},offset=${offset})}"
-                               th:text="${pageNumber}"
-                            ></a>
-
-                        </li>
-                        <li
-                            th:if="${currentPage<totalPage}" class="page-item">
-                            <a th:href="@{/admin/product/list(page=${currentPage}+1,offset=${offset})}" class="page-link">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
+                    <div>
+                        <a th:href="@{/admin/product/list(page=${products.number - 1})}" th:if="${products.hasPrevious()}">Previous</a>
+                        <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+                        <a th:href="@{/admin/product/list(page=${products.number + 1})}" th:if="${products.hasNext()}">Next</a>
+                    </div>
                 </div>
             </div>
             <!-- Records List End -->

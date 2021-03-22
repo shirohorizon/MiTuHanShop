@@ -26,6 +26,9 @@ public class FilterValueModel {
     @Column(name = "price")
     private String price;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "quantity")
     private Long quantity;
 }

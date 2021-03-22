@@ -21,8 +21,8 @@ public class FilterNameModel {
     @Fetch(FetchMode.JOIN)
     private ProductModel products;
 
-    @OneToMany(mappedBy = "filterNames", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    private Set<FilterValueModel> filterValueModels = new HashSet<FilterValueModel>();
+    @OneToMany(mappedBy = "filterNames", fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private Set<FilterValueModel> filterValues = new HashSet<FilterValueModel>();
 
     @Column(name = "name")
     private String name;

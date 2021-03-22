@@ -23,7 +23,6 @@ public interface UserService {
     public List<RoleModel> findRoleAll();
     public void authoUser(Long id, List<RoleModel> roles);
     public Page<UserModel> findAllByUsernameContaining(Optional<String> username, Pageable pageable);
-    public Page<RoleModel> fildRoleAll(Pageable pageable);
     public Page<UserModel> findAllByRolesContaining(RoleModel username, Pageable pageable);
 
 }

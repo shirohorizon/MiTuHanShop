@@ -20,8 +20,8 @@ public class ProductModel {
     @JoinColumn(name = "category_id", nullable = false, insertable = false, updatable = false)
     private CategoryModel category;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "products", cascade = {CascadeType.ALL})
-    private Set<FilterNameModel> Products = new HashSet<FilterNameModel>();
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "products", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private Set<FilterNameModel> filterNames = new HashSet<FilterNameModel>();
 
     @Column(name = "name")
     private String name;
@@ -42,11 +42,11 @@ public class ProductModel {
     private Integer status;
 
     @Column(name = "createddate")
-    private Date createddate;
+    private Date createdDate;
     @Column(name = "modifieddate")
-    private Date modifieddate;
+    private Date modifiedDate;
     @Column(name = "createdby")
-    private String createdby;
+    private String createdBy;
     @Column(name = "modifiedby")
-    private String modifiedby;
+    private String modifiedBy;
 }
