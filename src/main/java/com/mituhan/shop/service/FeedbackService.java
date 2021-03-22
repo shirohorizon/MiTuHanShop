@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface FeedbackService {
     public Long getTotal();
     public Page<FeedbackModel> findAllByIdIsLike(Optional<Long> username, Pageable pageable);
+    public void saveFeedback(FeedbackModel feedback);
+    public void deleteFeedback(Long id);
 }

@@ -1,4 +1,4 @@
-package com.mituhan.shop.controller;
+package com.mituhan.shop.controller.admin;
 
 import com.mituhan.shop.model.RoleModel;
 import com.mituhan.shop.model.UserModel;
